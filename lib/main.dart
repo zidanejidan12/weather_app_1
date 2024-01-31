@@ -56,7 +56,7 @@ class _WeatherAppState extends State<WeatherApp> {
 
   @override
   Widget build(BuildContext context) {
-    String googleApiKey = 'AIzaSyAVsku3_R5bbF-Vc9dt7fnZgu_iR1BYLUM';
+    String googleApiKey = '';
     String mapUrl =
         'https://maps.googleapis.com/maps/api/staticmap?center=$_latitude,$_longitude&zoom=14&size=400x400&key=$googleApiKey';
 
