@@ -19,6 +19,7 @@ class _WeatherAppState extends State<WeatherApp> {
   String _longitude = '';
   String _city = '';
   String _weather = '';
+  String _temperature = '';
   String _iconUrl = '';
 
   @override
@@ -48,6 +49,7 @@ class _WeatherAppState extends State<WeatherApp> {
       setState(() {
         _city = data['name'];
         _weather = data['weather'][0]['main'];
+        _temperature = data['main']['temp'].toString();
         _iconUrl =
             'http://openweathermap.org/img/w/${data['weather'][0]['icon']}.png';
       });
@@ -57,8 +59,9 @@ class _WeatherAppState extends State<WeatherApp> {
   @override
   Widget build(BuildContext context) {
     String googleApiKey = '';
+    String markerUrl = '$_latitude,$_longitude';
     String mapUrl =
-        'https://maps.googleapis.com/maps/api/staticmap?center=$_latitude,$_longitude&zoom=14&size=400x400&key=$googleApiKey';
+        'https://maps.googleapis.com/maps/api/staticmap?center=$_latitude,$_longitude&zoom=14&size=400x400&markers=$markerUrl&key=$googleApiKey';
 
     return MaterialApp(
       home: Scaffold(
@@ -85,6 +88,10 @@ class _WeatherAppState extends State<WeatherApp> {
                 ),
                 Text(
                   'Weather: $_weather',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                Text(
+                  'Temperature: $_temperature',
                   style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(height: 20),
