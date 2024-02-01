@@ -41,7 +41,7 @@ class _WeatherAppState extends State<WeatherApp> {
   void getWeatherData() async {
     String apiKey = 'c36d00a1ade6f97e5f7d9861c3dff92c';
     String apiUrl =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$_latitude&lon=$_longitude&appid=$apiKey';
+        'https://api.openweathermap.org/data/2.5/weather?lat=$_latitude&lon=$_longitude&appid=$apiKey&units=metric';
 
     http.Response response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
@@ -70,43 +70,97 @@ class _WeatherAppState extends State<WeatherApp> {
         ),
         body: SingleChildScrollView(
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Latitude: $_latitude',
-                  style: const TextStyle(fontSize: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.blue[200] as Color,
+                    Colors.blue[400] as Color,
+                  ],
                 ),
-                Text(
-                  'Longitude: $_longitude',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'City: $_city',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                Text(
-                  'Weather: $_weather',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                Text(
-                  'Temperature: $_temperature',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(height: 20),
-                Image.network(
-                  _iconUrl,
-                  width: 100,
-                  height: 100,
-                ),
-                const SizedBox(height: 20),
-                Image.network(
-                  mapUrl,
-                  width: 400,
-                  height: 300,
-                ),
-              ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Latitude: $_latitude',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'Longitude: $_longitude',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'City: $_city',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'Weather: $_weather',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'Temperature: ${double.parse(_temperature).toStringAsFixed(0)}°C',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Image.network(
+                    _iconUrl,
+                    width: 100,
+                    height: 100,
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        mapUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
